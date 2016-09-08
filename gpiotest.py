@@ -203,6 +203,7 @@ def initGpio():
         if (not gpio_inout[i]):
             GPIO.setup(gpio_ch[i], GPIO.IN, pull_up_down=GPIO.PUD_DOWN if gpio_pud[i] == 0 else GPIO.PUD_UP)
             GPIO.add_event_detect(gpio_ch[i], GPIO.BOTH, callback = gpio_callback, bouncetime = debounce) 
+            gpio_state[i] = GPIO.input(gpio_ch[i])
     curses.resetty()
     
 def gpio_callback(channel):
