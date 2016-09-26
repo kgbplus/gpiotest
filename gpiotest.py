@@ -9,6 +9,7 @@ except RuntimeError:
 import curses 
 import random
 import time
+from datetime import datetime
 
 def termOn():
     curses.nocbreak()
@@ -32,25 +33,25 @@ def MainScreen():
     myscreen.addstr(4,68, str(debounce) + " ms")
     myscreen.addstr(5,0, "--------------------------------------------------------------------------------")
     if (gpio_num == 17):
-        myscreen.addstr(6,0, "|      GPIO1 =           |      GPIO10  =            |                         |")
-        myscreen.addstr(7,0, "|      GPIO2 =           |      GPIO11  =            |                         |")
-        myscreen.addstr(8,0, "|      GPIO3 =           |      GPIO12  =            |                         |")
-        myscreen.addstr(9,0, "|      GPIO4 =           |      GPIO13  =            |                         |")
-        myscreen.addstr(10,0, "|      GPIO5 =           |      GPIO14  =            |                         |")
-        myscreen.addstr(11,0, "|      GPIO6 =           |      GPIO15  =            |                         |")
-        myscreen.addstr(12,0, "|      GPIO7 =           |      GPIO16  =            |                         |")
-        myscreen.addstr(13,0, "|      GPIO8 =           |      GPIO17  =            |                         |")
-        myscreen.addstr(14,0, "|      GPIO9 =           |                           |                         |")
+        myscreen.addstr(6,0, "|     GPIO0  =           |      GPIO15  =            |                         |")
+        myscreen.addstr(7,0, "|     GPIO1  =           |      GPIO17  =            |                         |")
+        myscreen.addstr(8,0, "|     GPIO4  =           |      GPIO18  =            |                         |")
+        myscreen.addstr(9,0, "|     GPIO7  =           |      GPIO21  =            |                         |")
+        myscreen.addstr(10,0, "|     GPIO8  =           |      GPIO22  =            |                         |")
+        myscreen.addstr(11,0, "|     GPIO9  =           |      GPIO23  =            |                         |")
+        myscreen.addstr(12,0, "|     GPIO10  =           |      GPIO24  =            |                         |")
+        myscreen.addstr(13,0, "|     GPIO11  =           |      GPIO25  =            |                         |")
+        myscreen.addstr(14,0, "|     GPIO14  =           |                           |                         |")
     else:
-        myscreen.addstr(6,0, "|      GPIO1 =           |      GPIO10  =            |      GPIO19 =           |")
-        myscreen.addstr(7,0, "|      GPIO2 =           |      GPIO11  =            |      GPIO20 =           |")
-        myscreen.addstr(8,0, "|      GPIO3 =           |      GPIO12  =            |      GPIO21 =           |")
-        myscreen.addstr(9,0, "|      GPIO4 =           |      GPIO13  =            |      GPIO22 =           |")
-        myscreen.addstr(10,0, "|      GPIO5 =           |      GPIO14  =            |      GPIO23 =           |")
-        myscreen.addstr(11,0, "|      GPIO6 =           |      GPIO15  =            |      GPIO24 =           |")
-        myscreen.addstr(12,0, "|      GPIO7 =           |      GPIO16  =            |      GPIO25 =           |")
-        myscreen.addstr(13,0, "|      GPIO8 =           |      GPIO17  =            |      GPIO26 =           |")
-        myscreen.addstr(14,0, "|      GPIO9 =           |      GPIO18  =            |                         |")
+        myscreen.addstr(6,0, "|     GPIO2  =           |      GPIO11  =            |      GPIO20 =           |")
+        myscreen.addstr(7,0, "|     GPIO3  =           |      GPIO12  =            |      GPIO21 =           |")
+        myscreen.addstr(8,0, "|     GPIO4  =           |      GPIO13  =            |      GPIO22 =           |")
+        myscreen.addstr(9,0, "|     GPIO5  =           |      GPIO14  =            |      GPIO23 =           |")
+        myscreen.addstr(10,0, "|     GPIO6  =           |      GPIO15  =            |      GPIO24 =           |")
+        myscreen.addstr(11,0, "|     GPIO7  =           |      GPIO16  =            |      GPIO25 =           |")
+        myscreen.addstr(12,0, "|     GPIO8  =           |      GPIO17  =            |      GPIO26 =           |")
+        myscreen.addstr(13,0, "|     GPIO9  =           |      GPIO18  =            |      GPIO27 =           |")
+        myscreen.addstr(14,0, "|     GPIO10 =           |      GPIO19  =            |                         |")
     myscreen.addstr(15,0,  "--------------------------------------------------------------------------------")
     myscreen.addstr(23,0,  "Q = Quit  P = Pause  D = Debounce  U = pullUp  1 = output_True 0 = output_False")
 
@@ -210,7 +211,8 @@ def gpio_callback(channel):
     global gpio_state
     if ((not gpio_inout[gpio_ch.index(channel)]) and (not on_pause)):
         gpio_state[gpio_ch.index(channel)] = GPIO.input(channel)
-	SendToLog("Channel " + str(channel) + "changed\n")
+	SendToLog(datetime.now().strftime("%Y-%b-%d %H:%M:%S")+": Channel " + str(channel) + 
+          " changed " + ("(on)" if GPIO.input(channel) else "(off)")+"\n")
 
 try:
     #Init curses
