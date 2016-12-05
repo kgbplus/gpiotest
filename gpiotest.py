@@ -141,7 +141,7 @@ def CheckKeys():
                 raise ValueError
             if (debounce_ != debounce):
                 debounce = debounce_
-                initGpio(0)
+                initGpio()
             termOff()
         except ValueError:
             PrintMsg("Value not in range")
@@ -162,7 +162,7 @@ def CheckKeys():
             if (pud != 1 and pud != 0):
                 raise ValueError
             gpio_pud[num] = pud
-            initGpio(0)
+            initGpio()
             termOff()
         except ValueError:
             PrintMsg("Value not in range")
@@ -202,7 +202,7 @@ def CheckKeys():
                 raise ValueError
             num = gpio_ch.index(channel)
             gpio_inout[num] = 0
-            initGpio(0)
+            initGpio()
             termOff()
         except ValueError:
             PrintMsg("Value not in range")
@@ -267,7 +267,7 @@ def getGpioNum(argument):
     }
     return switcher.get(argument, 17)
 
-def initGpio(firstrun):
+def initGpio(firstrun=0):
     curses.savetty()  #Save screen
 
     #Init GPIO
