@@ -27,5 +27,8 @@ I - Return pin to 'input' state. Program will show it's state.
 2. After equal sign - pin state True/False (1/0)
 3. In the brackets - pullup resistor state (^) - High or (v) - Low
 
+## Command line options:
+You can use ```-g``` or ```--gpio_num``` switch with ```17``` or ```26``` parameter to override automatic hardware detection.
+
 ## Questions
 Feel free to contact me on [Raspberry Pi forum](https://www.raspberrypi.org) or by e-mail
