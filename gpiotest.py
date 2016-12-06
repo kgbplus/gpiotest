@@ -27,6 +27,8 @@ try:
 except RuntimeError:
     print("Error importing RPi.GPIO!  This is probably because you need superuser privileges.  You can achieve this by using 'sudo' to run your script")
 
+import sys
+import getopt
 import curses
 import random
 import time
@@ -51,7 +53,7 @@ def MainScreen():
 
     myscreen.erase()
     myscreen.addstr(1,0, "--------------------------------------------------------------------------------")
-    myscreen.addstr(2,0, "|                          * Raspberry Pi GPIO test *                          |")
+    myscreen.addstr(2,0, "|                        * Raspberry Pi GPIO monitor *                         |")
     myscreen.addstr(3,0, "--------------------------------------------------------------------------------")
     myscreen.addstr(4,0, "|                                                      *   Debounce            |")
     myscreen.addstr(4,2, RaspiModel + " detected (" + str(gpio_num) + " lines)")
@@ -64,9 +66,9 @@ def MainScreen():
         myscreen.addstr(9,0, "|     GPIO7  =           |      GPIO21  =            |                         |")
         myscreen.addstr(10,0, "|     GPIO8  =           |      GPIO22  =            |                         |")
         myscreen.addstr(11,0, "|     GPIO9  =           |      GPIO23  =            |                         |")
-        myscreen.addstr(12,0, "|     GPIO10  =           |      GPIO24  =            |                         |")
-        myscreen.addstr(13,0, "|     GPIO11  =           |      GPIO25  =            |                         |")
-        myscreen.addstr(14,0, "|     GPIO14  =           |                           |                         |")
+        myscreen.addstr(12,0, "|     GPIO10 =           |      GPIO24  =            |                         |")
+        myscreen.addstr(13,0, "|     GPIO11 =           |      GPIO25  =            |                         |")
+        myscreen.addstr(14,0, "|     GPIO14 =           |                           |                         |")
     else:
         myscreen.addstr(6,0, "|     GPIO2  =           |      GPIO11  =            |      GPIO20 =           |")
         myscreen.addstr(7,0, "|     GPIO3  =           |      GPIO12  =            |      GPIO21 =           |")
@@ -237,10 +239,17 @@ def getRaspiModel(argument):
         "000f": "Model B Revision 2.0 512Mb",
         "0010": "Model B+ 512Mb",
         "0012": "Model A+ 256Mb",
-        "a01041": "2 Model B 1Gb",
-        "a21041": "2 Model B 1Gb",
-        "900092": "Zero 512Mb",
-        "a02082": "3 Model B 1Gb"
+        "0013": "Model B+ 512Mb",
+        "0015": "Model A+ 256/512Mb",
+        "a01040": "2 Model B Revision 1.0 1Gb",
+        "a01041": "2 Model B Revision 1.1 1Gb",
+        "a21041": "2 Model B Revision 1.1 1Gb",
+        "a22042": "2 Model B (with BCM2837) 1Gb",
+        "900092": "Zero Revision 1.2 512Mb",
+        "900093": "Zero Revision 1.3 512Mb",
+        "920093": "Zero Revision 1.3 512Mb",
+        "a02082": "3 Model B 1Gb",
+        "a22082": "3 Model B 1Gb"
     }
     return switcher.get(argument, "not supported")
 
@@ -260,10 +269,17 @@ def getGpioNum(argument):
         "000f": 17,
         "0010": 26,
         "0012": 26,
+        "0013": 26,
+        "0015": 26,
+        "a01040": 26,
         "a01041": 26,
         "a21041": 26,
+        "a22042": 26,
         "900092": 26,
-        "a02082": 26
+        "900093": 26,
+        "920093": 26,
+        "a02082": 26,
+        "a22082": 26
     }
     return switcher.get(argument, 17)
 
@@ -295,12 +311,26 @@ def gpio_callback(channel):
           " changed " + ("(on)" if GPIO.input(channel) else "(off)")+"\n")
 
 try:
-    #Init curses
-    myscreen = curses.initscr()
-    logwindow = myscreen.subwin(5,80,16,0)
-    msgwindow = myscreen.subwin(1,80,22,0)
-    termOff()
+    #Check command line options
+    gpio_num = 0
+    opts, args = getopt.getopt(sys.argv[1:],"hg:",["help","gpio_num="])
+except getopt.GetoptError:
+    print('Usage: gpiotest.py [--gpio_num <num>]')
+    sys.exit(2)
+for opt, arg in opts:
+    if opt == '-h' or opt == '--help':
+        print('Usage: gpiotest.py [--gpio_num <num>]')
+        sys.exit()
+    elif opt == '-g' or opt == '--gpio_num':
+        if arg == '17':
+            gpio_num = 17
+        elif arg == '26':
+            gpio_num = 26
+        else:
+            print('Error: gpio_num must be 17 or 26')
+            sys.exit()
 
+try:
     #Detect Raspberry Pi model
     RaspiModel = getRaspiModel(GPIO.RPI_INFO['REVISION'])
     if (RaspiModel == "not supported"):
@@ -308,7 +338,9 @@ try:
 
     #Detect GPIO parameters
     #gpio_ch - array of GPIO lines numbers
-    gpio_num = getGpioNum(GPIO.RPI_INFO['REVISION'])
+    if gpio_num == 0:
+        gpio_num = getGpioNum(GPIO.RPI_INFO['REVISION'])
+
     if (gpio_num == 17):
         gpio_ch = [0,1,4,7,8,9,10,11,14,15,17,18,21,22,23,24,25]
     else:
@@ -326,6 +358,12 @@ try:
     on_pause = 0
     log = ['' for _ in range(6)]
 
+    #Init curses
+    myscreen = curses.initscr()
+    logwindow = myscreen.subwin(5,80,16,0)
+    msgwindow = myscreen.subwin(1,80,22,0)
+    termOff()
+
     #Init GPIO
     initGpio(1)
 
@@ -340,6 +378,9 @@ except KeyboardInterrupt:
     myscreen.addstr(21,0,"Ctrl-C pressed")
     time.sleep(0.5)
     GPIO.cleanup()
+
+except Exception as e:
+    print(e)
 
 finally:
     # Reset terminal
