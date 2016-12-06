@@ -1,6 +1,6 @@
 # gpiotest.py
 
-Small console utility to do gpio pin testing & Raspberry Pi DYI projects debugging
+Small console utility to do gpio pin monitor & Raspberry Pi DYI projects debugging
 
 ![screenshot](https://github.com/kgbplus/gpiotest/blob/master/gpiotest.png)
 
@@ -31,4 +31,4 @@ I - Return pin to 'input' state. Program will show it's state.
 You can use ```-g``` or ```--gpio_num``` switch with ```17``` or ```26``` parameter to override automatic hardware detection.
 
 ## Questions
-Feel free to contact me on [Raspberry Pi forum](https://www.raspberrypi.org) or by e-mail
+Feel free to contact me on [Raspberry Pi forum](https://www.raspberrypi.org) or by [e-mail](roman@mindlin.ru)
