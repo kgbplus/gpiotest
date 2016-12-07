@@ -31,4 +31,4 @@ I - Return pin to 'input' state. Program will show it's state.
 You can use ```-g``` or ```--gpio_num``` switch with ```17``` or ```26``` parameter to override automatic hardware detection.
 
 ## Questions
-Feel free to contact me on [Raspberry Pi forum](https://www.raspberrypi.org) or by [e-mail](roman@mindlin.ru)
+Feel free to contact me on [Raspberry Pi forum](https://www.raspberrypi.org/forums/viewtopic.php?f=37&t=167609) or by [e-mail](roman@mindlin.ru)
