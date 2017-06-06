@@ -4,9 +4,7 @@ Small console utility to do gpio pin monitor & Raspberry Pi DYI projects debuggi
 
 ![screenshot](https://github.com/kgbplus/gpiotest/blob/master/gpiotest.png)
 
-To start, enter ```
-sudo python gpiotest.py
-``` from console
+To start, enter ```sudo python gpiotest.py``` from console
 
 ## Keyboard commands:
 
