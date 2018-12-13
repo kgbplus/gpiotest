@@ -253,7 +253,9 @@ def getRaspiModel(argument):
         "9000c1": "Zero W Revision 1.1 512Mb",
         "a02082": "3 Model B 1Gb",
         "a22082": "3 Model B 1Gb",
-        "a32082": "3 Model B 1Gb"
+        "a32082": "3 Model B 1Gb",
+        "a020d3": "3 Model B+ 1Gb",
+        "9020e0": "3 Model A+ 512Mb"
     }
     return switcher.get(argument, "not supported")
 
@@ -287,7 +289,9 @@ def getGpioNum(argument):
         "9000c1": 26,
         "a02082": 26,
         "a22082": 26,
-        "a32082": 26
+        "a32082": 26,
+        "a020d3": 26,
+        "9020e0": 26
     }
     return switcher.get(argument, 17)
 
