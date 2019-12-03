@@ -240,6 +240,7 @@ def getRaspiModel(argument):
         "0010": "Model B+ 512Mb",
         "0012": "Model A+ 256Mb",
         "0013": "Model B+ 512Mb",
+        "13": "Model B+ 512Mb",  # https://github.com/kgbplus/gpiotest/issues/7
         "0015": "Model A+ 256/512Mb",
         "a01040": "2 Model B Revision 1.0 1Gb",
         "a01041": "2 Model B Revision 1.1 1Gb",
@@ -280,6 +281,7 @@ def getGpioNum(argument):
         "0010": 26,
         "0012": 26,
         "0013": 26,
+        "13": 26,
         "0015": 26,
         "a01040": 26,
         "a01041": 26,
