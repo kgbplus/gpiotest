@@ -352,10 +352,16 @@ for opt, arg in opts:
             sys.exit()
 
 try:
+    #Init curses
+    myscreen = curses.initscr()
+    logwindow = myscreen.subwin(5,80,16,0)
+    msgwindow = myscreen.subwin(1,80,22,0)
+    termOff()
+
     #Detect Raspberry Pi model
     RaspiModel = getRaspiModel(GPIO.RPI_INFO['REVISION'])
     if (RaspiModel == "not supported"):
-        raise NameError('hardware not supported')
+        raise RuntimeError('hardware not supported')
 
     #Detect GPIO parameters
     #gpio_ch - array of GPIO lines numbers
@@ -378,12 +384,6 @@ try:
     gpio_pud = [0 for _ in range(gpio_num)]
     on_pause = 0
     log = ['' for _ in range(6)]
-
-    #Init curses
-    myscreen = curses.initscr()
-    logwindow = myscreen.subwin(5,80,16,0)
-    msgwindow = myscreen.subwin(1,80,22,0)
-    termOff()
 
     #Init GPIO
     initGpio(1)

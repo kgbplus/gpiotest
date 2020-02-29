@@ -6,6 +6,7 @@ Small console utility to do gpio pin monitor & Raspberry Pi DYI projects debuggi
 
 To start, enter ```sudo python gpiotest.py``` from console
 
+(If you got addstr() error - just increase size of terminal window)
 ## Keyboard commands:
 
 Q - Quit program
