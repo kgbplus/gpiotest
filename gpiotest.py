@@ -259,7 +259,8 @@ def getRaspiModel(argument):
         "9020e0": "3 Model A+ 512Mb",
         "a03111": "4 Model B 1Gb",
         "b03111": "4 Model B 2Gb",
-        "c03111": "4 Model B 4Gb"
+        "c03111": "4 Model B 4Gb",
+        "c03112": "4 Model B 4Gb"
 
     }
     return switcher.get(argument, "not supported")
