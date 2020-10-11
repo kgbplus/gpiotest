@@ -301,7 +301,8 @@ def getGpioNum(argument):
         "9020e0": 26,
         "a03111": 26,
         "b03111": 26,
-        "c03111": 26
+        "c03111": 26,
+        "c03112": 26
     }
     return switcher.get(argument, 17)
 
