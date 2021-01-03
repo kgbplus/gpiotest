@@ -260,7 +260,8 @@ def getRaspiModel(argument):
         "a03111": "4 Model B 1Gb",
         "b03111": "4 Model B 2Gb",
         "c03111": "4 Model B 4Gb",
-        "c03112": "4 Model B 4Gb"
+        "c03112": "4 Model B 4Gb",
+        "d03114": "4 Model B 8Gb"
 
     }
     return switcher.get(argument, "not supported")
@@ -302,7 +303,8 @@ def getGpioNum(argument):
         "a03111": 26,
         "b03111": 26,
         "c03111": 26,
-        "c03112": 26
+        "c03112": 26,
+        "d03114": 26
     }
     return switcher.get(argument, 17)
 
