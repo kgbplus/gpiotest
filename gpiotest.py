@@ -236,6 +236,7 @@ def getRaspiModel(argument):
         "0009": "Model A 256Mb",
         "000d": "Model B Revision 2.0 512Mb",
         "000e": "Model B Revision 2.0 512Mb",
+        "e": "Model B Revision 2.0 512Mb",
         "000f": "Model B Revision 2.0 512Mb",
         "0010": "Model B+ 512Mb",
         "0012": "Model A+ 256Mb",
@@ -283,6 +284,7 @@ def getGpioNum(argument):
         "0009": 17,
         "000d": 17,
         "000e": 17,
+        "e": 17,
         "000f": 17,
         "0010": 26,
         "0012": 26,
@@ -373,7 +375,7 @@ try:
     #Detect Raspberry Pi model
     RaspiModel = getRaspiModel(GPIO.RPI_INFO['REVISION'])
     if (RaspiModel == "not supported"):
-        raise RuntimeError('hardware not supported')
+        raise RuntimeError('GPIOTEST does not support this version of Raspberry PI. To add it, visit https://raspi.tv/2015/rpi-gpio-new-feature-gpio-rpi_info-replaces-gpio-rpi_revision')
 
     #Detect GPIO parameters
     #gpio_ch - array of GPIO lines numbers
